@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400');
+@import "./components/addEvent.css";
+@import "./components/button.css";
+@import "./components/event.css";
+
+.container {
+  /*border: 1px solid #6E9ECF;*/
+  /*border-radius: 10px;*/
+  width: 80%;
+  margin: 10px auto;
+}
+
+.manage-events {
+  height: 70px;
+  display: flex;
+  justify-content: center;
+}
+
+.manage-events button {
+  display: block;
+}
+
+.calendar {
+  display: flex;
+  justify-content: center;
+}
+
+.calendar-events {
+  height: 1080px;
+  width: 250px;
+  position: relative;
+  overflow: hidden;
+}
+
+.time-list {
+  list-style-type: none;
+  height: 1096px;
+  margin: 0 3px 0 0;
+  padding: 0px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  line-height: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.time-list li:nth-child(even) {
+  font-size: 12px;
+}
+
+

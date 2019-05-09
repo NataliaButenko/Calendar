@@ -1,0 +1,37 @@
+.event {
+  background-color: #E2ECF5;
+  border-left: 2px solid #6E9ECF;
+  position: absolute;
+  width: 200px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 0 10px 0 3px;
+
+}
+
+.event:hover {
+  text-overflow: clip;
+  overflow: scroll;
+  white-space: pre-wrap;
+}
+
+.delEvent {
+  height: 10px;
+  width: 10px;
+  color: #6E9ECF;
+  position: absolute;
+  top: 0;
+  right: 0px;
+}
+
+.delEvent:hover {
+  cursor: pointer;
+  color: black;
+}
+
+.two {
+  margin-left: 100px;
+}
