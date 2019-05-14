@@ -6,16 +6,23 @@ import { openEventCreationWindow, closeEventCreationWindow} from "./store/action
 import { setEvents } from "./store/actions/eventsActions/setEvents";
 import { addEvent } from "./store/actions/eventsActions/addEvent";
 import { events } from "./services/events";
-import { Event } from "./components/event";
+import Event from "./components/event";
 import { deleteEvent } from "./store/actions/eventsActions/deleteEvent";
 
 import './App.css';
 
 class AppComponent extends Component {
+  constructor() {
+    super();
+    this.state = {
+      myEvents: []
+    }
+  }
+
 
   componentDidMount() {
     const { setEvents } = this.props;
-    setEvents( events );
+    // setEvents( events );               //  to set default events
   }
 
   onClickAddEventOpen = (e) => {
@@ -44,15 +51,44 @@ class AppComponent extends Component {
   };
 
   intersection = (e1x, e1y, e2x, e2y) => {
-    if(e1y < e2x || e1x > e2y ) {
+    if(e1y <= e2x || e1x >= e2y ) {
       return false
     } else {
       return true
     }
   };
 
+  renderEvents = () => {
+    const { events, deleteEvent } = this.props;
+
+    return events.map((event, index)=> {
+      let style = {
+        top: (event.start * 2) + 'px',
+        height: (event.duration * 2) + 'px'
+      };
+      let arr = events.filter(ev => {
+        return ((ev.start !== event.start) || (ev.duration !== event.duration) || (ev.title !== event.title))
+      });
+
+      arr.forEach((elem, ind) => {
+        let tmp = this.intersection(event.start, (event.start + event.duration), elem.start, (elem.start + elem.duration));
+        if(tmp) {
+          style.width = '85px';
+          if(ind >= index) {
+            // style.position = 'relative';
+            style.left = '100px';
+          }
+        }
+      });
+      const childRef = React.createRef();
+      // this.state.myEvents.push(childRef);
+
+      return <Event ref={ childRef } style={ style } key={ index } title={ event.title } delEvent={ deleteEvent } event={ event }/>
+    })
+  };
+
   render() {
-    const { eventCreationWindow, events, addEvent, deleteEvent } = this.props;
+    const { eventCreationWindow, addEvent } = this.props;
     return (
       <div className='container'>
         <div className='manage-events'>
@@ -85,24 +121,7 @@ class AppComponent extends Component {
           </div>
           <div className='calendar-events'>
             {
-              events.map((event, index)=> {
-                let style = {
-                  top: (event.start * 2) + 'px',
-                  height: (event.duration * 2) + 'px'
-                };
-                let arr = events.filter(ev => {
-                  return ((ev.start !== event.start) || (ev.duration !== event.duration) || (ev.title !== event.title))
-                });
-
-                arr.forEach((elem) => {
-                  let tmp = this.intersection(event.start, (event.start + event.duration), elem.start, (elem.start + elem.duration));
-                  if(tmp) {
-                    style.width = '100px';
-                  }
-                });
-
-                return <Event style={ style } key={ index } title={ event.title } delEvent={ deleteEvent } event={ event }/>
-              })
+              this.renderEvents()
             }
           </div>
         </div>

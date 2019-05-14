@@ -11,9 +11,10 @@ export class AddEvent extends Component {
 
   onClickApply = () => {
     let newEvent = {
-      start: +this.state.event.hour + (+this.state.event.minutes),
-      duration: +this.state.event.duration,
-      title: this.state.event.title
+      start: Number(this.state.event.hour) + Number(this.state.event.minutes),
+      duration: Number(this.state.event.duration),
+      title: this.state.event.title,
+      position: 1
     };
     const { close, addEvent } = this.props;
     addEvent(newEvent);
@@ -38,8 +39,7 @@ export class AddEvent extends Component {
       <div className='add-event'>
         <h3>Add event</h3>
         <h5>Select the start time of the event</h5>
-        <select id='hour' name="hour" onChange={ this.onChangeTime } >
-          <option value="" selected disabled hidden>00</option>
+        <select id='hour' name="hour" onChange={ this.onChangeTime } defaultValue='0'>
           <option value="0">8</option>
           <option value="60">9</option>
           <option value="120">10</option>
@@ -51,8 +51,7 @@ export class AddEvent extends Component {
           <option value="480">16</option>
         </select>
         <span> : </span>
-        <select name="minutes" id="minutes" onChange={ this.onChangeTime }>
-          <option value="" selected disabled hidden>00</option>
+        <select name="minutes" id="minutes" onChange={ this.onChangeTime } defaultValue='00'>
           <option value="00">00</option>
           <option value="05">05</option>
           <option value="10">10</option>

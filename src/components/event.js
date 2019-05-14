@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-export class Event extends Component {
+class Event extends Component {
   constructor() {
     super();
     this.state = {
-      showDelEvent: false
+      showDelEvent: false,
     }
   }
 
@@ -24,8 +24,12 @@ export class Event extends Component {
     const { style, title, delEvent, event } = this.props;
 
     return(
-      <div className={ `event ${ event.position }` }
-           style={ style } onMouseEnter={ this.handleHoverOn } onMouseLeave={ this.handleHoverOff }>
+      <div ref={this.props.innerRef}
+           className='event'
+           style={ style }
+           onMouseEnter={ this.handleHoverOn }
+           onMouseLeave={ this.handleHoverOff }
+      >
         { title }
         {
           this.state.showDelEvent ? <div className='delEvent' onClick={ () => delEvent(event) }>X</div> : ''
@@ -34,3 +38,5 @@ export class Event extends Component {
     )
   }
 }
+
+export default React.forwardRef((props, ref) => <Event innerRef={ref} {...props}/>);
